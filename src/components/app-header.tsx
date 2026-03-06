@@ -1,6 +1,5 @@
 "use client"
 
-import { SidebarTrigger } from "@/components/ui/sidebar"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,24 +10,21 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { ModeToggle } from "@/components/mode-toggle"
 import { ChevronRight } from "lucide-react"
 
 /**
  * DESIGNER NOTE: Wise-style top header
- * — Left: sidebar trigger + WISE logo. Right: Earn CTA + user profile (avatar, name, dropdown).
+ * — Right: Earn CTA + user profile (avatar, name, dropdown).
  * — Restyle: edit button variants, avatar size, or add --wise-* CSS variables in globals.css.
  */
 export function AppHeader() {
   return (
-    <header className="flex h-14 shrink-0 items-center gap-4 border-b border-border bg-background px-4">
-      <SidebarTrigger className="-ml-1" />
-      {/* DESIGNER: Replace with your logo asset or SVG; Wise uses green "WISE" wordmark */}
-      <div className="flex items-center gap-2">
-        <span className="text-xl font-bold text-primary">WISE</span>
-      </div>
+    <header className="mx-auto flex h-14 w-full max-w-[976px] shrink-0 items-center gap-4 bg-background px-4 pt-16">
       <div className="flex flex-1" />
       <div className="flex items-center gap-2">
-        <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
+        <ModeToggle />
+        <Button size="sm" className="bg-primary text-brand-green-700-fg hover:bg-primary/90">
           Earn €90
         </Button>
         <DropdownMenu>
