@@ -5,6 +5,21 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* Brand green primitives — use directly: bg-brand-green-100, text-brand-green-500, etc. */
+  --color-brand-green-100: var(--brand-green-100);
+  --color-brand-green-500: var(--brand-green-500);
+  --color-brand-green-600: var(--brand-green-600);
+  --color-brand-green-700: var(--brand-green-700);
+  /* Green 700 as foreground on light green (primary) — always #163300 for contrast in dark mode */
+  --color-brand-green-700-fg: var(--brand-green-700-fg);
+  /* Grey primitives — use directly: bg-grey-100, text-grey-400, etc. */
+  --color-grey-100: var(--grey-100);
+  --color-grey-200: var(--grey-200);
+  --color-grey-300: var(--grey-300);
+  --color-grey-400: var(--grey-400);
+  --color-grey-500: var(--grey-500);
+  --color-grey-600: var(--grey-600);
+  --color-grey-700: var(--grey-700);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -48,84 +63,107 @@
 }
 
 /* ==========================================================================
-   DESIGNER NOTE: Theme variables (light mode)
-   All colours use HEX so you can copy values from Figma and paste here.
-   Key variables:
-   — --background / --foreground: page background and text
-   — --primary / --primary-foreground: primary buttons, links, badges (e.g. Wise green)
-   — --secondary, --muted, --accent: secondary UI surfaces
-   — --border, --input, --ring: borders and focus rings
-   — --radius: default border radius (buttons, cards, inputs)
-   — --sidebar-*: sidebar-specific colours
+   Brand green + grey primitives (shared by light and dark)
+   Brand green: bg-brand-green-100, text-brand-green-500, etc.
+   Grey: bg-grey-100, text-grey-400, etc.
    ========================================================================== */
 :root {
+  --brand-green-100: #d6f9ce;
+  --brand-green-500: #9ee770;
+  --brand-green-600: #8EDC4E;
+  --brand-green-700: #163300;
+  --brand-green-700-fg: #163300;
+  --grey-100: #ffffff;
+  --grey-200: #ECEDE8;
+  --grey-300: #E2E4DF;
+  --grey-400: #5a5e58;
+  --grey-500: #2f322d;
+  --grey-600: #0b0c0a;
+  --grey-700: #0b0c0a;
+
+  /* Light mode — semantic vars mapped to grey primitives */
   --radius: 0.625rem;
-  --background: #ffffff;
-  --foreground: #252525;
-  --card: #ffffff;
-  --card-foreground: #252525;
-  --popover: #ffffff;
-  --popover-foreground: #252525;
-  --primary: #343434;
-  --primary-foreground: #fafafa;
-  --secondary: #f5f5f5;
-  --secondary-foreground: #343434;
-  --muted: #f5f5f5;
-  --muted-foreground: #737373;
-  --accent: #f5f5f5;
-  --accent-foreground: #343434;
+  --background: var(--grey-100);
+  --foreground: var(--grey-600);
+  --card: var(--grey-200);
+  --card-foreground: var(--grey-600);
+  --popover: var(--grey-100);
+  --popover-foreground: var(--grey-600);
+  --primary: var(--brand-green-500);
+  --primary-foreground: var(--brand-green-700);
+  --secondary: var(--brand-green-100);
+  --secondary-foreground: var(--brand-green-700);
+  --muted: var(--grey-200);
+  --muted-foreground: var(--grey-400);
+  --accent: var(--grey-200);
+  --accent-foreground: var(--grey-600);
   --destructive: #dc2626;
-  --border: #e5e5e5;
-  --input: #e5e5e5;
-  --ring: #a3a3a3;
+  --border: var(--grey-300);
+  --input: var(--grey-300);
+  --ring: var(--grey-400);
   --chart-1: #e07c2e;
   --chart-2: #2a9d8f;
   --chart-3: #3d5a80;
   --chart-4: #e9c46a;
   --chart-5: #e76f51;
-  --sidebar: #fafafa;
-  --sidebar-foreground: #252525;
-  --sidebar-primary: #343434;
-  --sidebar-primary-foreground: #fafafa;
-  --sidebar-accent: #f5f5f5;
-  --sidebar-accent-foreground: #343434;
-  --sidebar-border: #e5e5e5;
-  --sidebar-ring: #a3a3a3;
+  --sidebar: transparent;
+  --sidebar-foreground: var(--grey-600);
+  --sidebar-primary: var(--grey-500);
+  --sidebar-primary-foreground: var(--grey-100);
+  --sidebar-accent: var(--grey-200);
+  --sidebar-accent-foreground: var(--grey-600);
+  --sidebar-border: var(--grey-300);
+  --sidebar-ring: var(--grey-400);
 }
 
-/* DESIGNER: Dark mode — add class "dark" to <html> to enable; these vars override :root in dark mode */
+/* Dark mode — primitives inverted for contrast + semantic vars */
 .dark {
-  --background: #252525;
-  --foreground: #fafafa;
-  --card: #343434;
-  --card-foreground: #fafafa;
-  --popover: #343434;
-  --popover-foreground: #fafafa;
-  --primary: #ebebeb;
-  --primary-foreground: #252525;
-  --secondary: #454545;
-  --secondary-foreground: #fafafa;
-  --muted: #454545;
-  --muted-foreground: #a3a3a3;
-  --accent: #454545;
-  --accent-foreground: #fafafa;
+  /* Primitives: inverted for visibility on dark backgrounds */
+  --brand-green-100: #163300;
+  --brand-green-500: #9ee770;
+  --brand-green-600: #8EDC4E;
+  --brand-green-700: #9ee770;
+  --brand-green-700-fg: #163300;
+  --grey-100: #0b0c0a;
+  --grey-200: #2f322d;
+  --grey-300: #5a5e58;
+  --grey-400: #a8a9a4;
+  --grey-500: #d7d8d2;
+  --grey-600: #ecede8;
+  --grey-700: #ffffff;
+
+  /* Semantic vars */
+  --background: var(--grey-100);
+  --foreground: var(--grey-700);
+  --card: var(--grey-200);
+  --card-foreground: var(--grey-700);
+  --popover: var(--grey-200);
+  --popover-foreground: var(--grey-700);
+  --primary: var(--brand-green-500);
+  --primary-foreground: var(--brand-green-700);
+  --secondary: var(--brand-green-100);
+  --secondary-foreground: var(--brand-green-700);
+  --muted: var(--grey-200);
+  --muted-foreground: var(--grey-400);
+  --accent: var(--grey-200);
+  --accent-foreground: var(--grey-700);
   --destructive: #ef4444;
-  --border: rgba(255, 255, 255, 0.1);
-  --input: rgba(255, 255, 255, 0.15);
-  --ring: #737373;
+  --border: var(--grey-300);
+  --input: var(--grey-300);
+  --ring: var(--grey-400);
   --chart-1: #6366f1;
   --chart-2: #2dd4bf;
   --chart-3: #e9c46a;
   --chart-4: #a78bfa;
   --chart-5: #f87171;
-  --sidebar: #252525;
-  --sidebar-foreground: #fafafa;
+  --sidebar: transparent;
+  --sidebar-foreground: var(--grey-700);
   --sidebar-primary: #6366f1;
-  --sidebar-primary-foreground: #fafafa;
-  --sidebar-accent: #454545;
-  --sidebar-accent-foreground: #fafafa;
-  --sidebar-border: rgba(255, 255, 255, 0.1);
-  --sidebar-ring: #737373;
+  --sidebar-primary-foreground: var(--grey-700);
+  --sidebar-accent: var(--grey-200);
+  --sidebar-accent-foreground: var(--grey-700);
+  --sidebar-border: var(--grey-300);
+  --sidebar-ring: var(--grey-400);
 }
 
 @layer base {
@@ -135,4 +173,143 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Cards horizontal scroll — always-visible scrollbar (macOS overlay scrollbars hide by default) */
+.cards-scroll {
+  scrollbar-gutter: stable;
+}
+.cards-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+.cards-scroll::-webkit-scrollbar-track {
+  background: var(--muted);
+  border-radius: 4px;
+}
+.cards-scroll::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+  border-radius: 4px;
+}
+.cards-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--foreground);
+}
+
+/* Centered layout container — sidebar left margin adapts with viewport */
+.layout-container {
+  --container-offset: clamp(1rem, calc((100vw - 1400px) / 2 + 1rem), 9999px);
+}
+@media (min-width: 640px) {
+  .layout-container {
+    --container-offset: clamp(1.5rem, calc((100vw - 1400px) / 2 + 1.5rem), 9999px);
+  }
+}
+@media (min-width: 768px) {
+  .layout-container {
+    --container-offset: clamp(2rem, calc((100vw - 1400px) / 2 + 2rem), 9999px);
+  }
+}
+@media (min-width: 1024px) {
+  .layout-container {
+    --container-offset: clamp(3rem, calc((100vw - 1400px) / 2 + 3rem), 9999px);
+  }
+}
+@media (min-width: 1280px) {
+  .layout-container {
+    --container-offset: clamp(4rem, calc((100vw - 1400px) / 2 + 4rem), 9999px);
+  }
+}
+/* Sidebar left position — adaptive with container padding and centering (only when expanded) */
+.layout-container [data-slot="sidebar"][data-state="expanded"] [data-slot="sidebar-container"] {
+  left: var(--container-offset) !important;
+}
+.layout-container [data-slot="sidebar-gap"] {
+  margin-left: 0 !important;
+}
+
+/* Remove number input spinners (up/down chevrons) */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Insights submenu — no vertical line, active item: bold text only, no background */
+[data-sidebar="menu-sub"] {
+  border-left: none !important;
+}
+
+/* Insights submenu icons — ensure visibility */
+[data-sidebar="menu-sub"] [data-sidebar="menu-sub-button"] svg {
+  display: block !important;
+  width: 16px !important;
+  height: 16px !important;
+  flex-shrink: 0 !important;
+}
+[data-sidebar="menu-sub-button"][data-active="true"] {
+  background: transparent !important;
+  font-weight: 700 !important;
+  color: var(--brand-green-700) !important;
+}
+[data-sidebar="menu-sub-button"][data-active="true"]:hover {
+  background: transparent !important;
+}
+
+/* Insights chevron — size matches other menu icons */
+.insights-chevron {
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  min-height: 24px !important;
+}
+
+/* Add alert row — hover: background, bold green text, darker icon */
+[data-add-alert] button:hover {
+  background-color: var(--grey-300) !important;
+}
+[data-add-alert] button:hover p {
+  font-weight: 700 !important;
+  color: var(--brand-green-700) !important;
+}
+[data-add-alert] button:hover svg {
+  color: var(--brand-green-700) !important;
+  opacity: 1 !important;
+}
+[data-add-alert] button:hover div[class*="rounded-full"] {
+  border-color: color-mix(in srgb, var(--grey-400) 65%, transparent) !important;
+}
+
+/* Empty add card — hover background (grey-300) */
+[data-add-card] button:hover {
+  background-color: var(--grey-300) !important;
+}
+
+/* Set alert button — full width, 12px gap above (from graph), hover: background, bold green text, darker icon */
+[data-set-alert] {
+  width: 100% !important;
+  margin-top: 12px !important;
+}
+[data-set-alert]:hover {
+  background-color: var(--grey-300) !important;
+}
+[data-set-alert]:hover span {
+  font-weight: 700 !important;
+  color: var(--brand-green-700) !important;
+}
+[data-set-alert]:hover svg {
+  color: var(--brand-green-700) !important;
+  opacity: 1 !important;
+}
+[data-set-alert]:hover div[class*="rounded-full"] {
+  border-color: color-mix(in srgb, var(--grey-400) 65%, transparent) !important;
+}
+
+/* Insights menu — active background when on any insights route, no background on hover */
+[data-insights-trigger][data-active="true"] {
+  background-color: var(--grey-200) !important;
+}
+[data-insights-trigger]:hover {
+  background-color: transparent !important;
 }

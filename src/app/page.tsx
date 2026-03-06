@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import {
   Card,
   CardContent,
@@ -6,13 +7,9 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { ArrowUpCircle, PlusCircle, ChevronDown } from "lucide-react"
+import { ArrowUp, Plus } from "lucide-react"
+import { CURRENCY_ACCOUNTS, CARD_FLAG_SIZE } from "@/lib/currency-settings"
+import { TransferCalculatorSection } from "@/components/transfer-calculator-section"
 
 /**
  * DESIGNER NOTE: Wise-style dashboard — layout and structure only.
@@ -25,54 +22,47 @@ import { ArrowUpCircle, PlusCircle, ChevronDown } from "lucide-react"
  * — Footer (Provided by Wise Assets Europe)
  */
 
-const CURRENCY_ACCOUNTS = [
-  { code: "EUR", label: "EUR", accountId: "51568", balance: "1.00", flag: "🇪🇺" },
-  { code: "AUD", label: "AUD", accountId: "30779", balance: "0.00", flag: "🇦🇺" },
-  { code: "CAD", label: "CAD", accountId: "15376", balance: "0.00", flag: "🇨🇦" },
-  { code: "GBP", label: "GBP", accountId: "13159", balance: "0.00", flag: "🇬🇧" },
-]
-
 const RECENT_TRANSACTIONS = [
-  { id: "1", icon: ArrowUpCircle, name: "Hannah Johnson", subtitle: "Sent - 18 Apr", amount: "49 EUR", isCredit: false },
-  { id: "2", icon: PlusCircle, name: "To EUR", subtitle: "Added - 18 Apr", amount: "+ 50 EUR", subAmount: "50.44 EUR", isCredit: true },
-  { id: "3", icon: ArrowUpCircle, name: "Brandon Bolt", subtitle: "Sent - 2 Apr", amount: "110 EUR", isCredit: false },
+  { id: "1", icon: ArrowUp, name: "Hannah Johnson", subtitle: "Sent - 18 Apr", amount: "49 EUR", isCredit: false },
+  { id: "2", icon: Plus, name: "To EUR", subtitle: "Added - 18 Apr", amount: "+ 50 EUR", subAmount: "50.44 EUR", isCredit: true },
+  { id: "3", icon: ArrowUp, name: "Brandon Bolt", subtitle: "Sent - 2 Apr", amount: "110 EUR", isCredit: false },
 ]
 
 export default function Home() {
   return (
-    <div className="flex flex-1 flex-col gap-8 p-6">
+    <div className="mx-auto w-full max-w-[976px] flex flex-1 flex-col gap-6 px-6 pb-6 pt-[56px]">
       {/* Total balance + actions */}
-      <section className="space-y-4">
-        <h2 className="text-sm font-medium text-muted-foreground">Total balance</h2>
-        <p className="text-3xl font-bold tracking-tight">1.00 EUR</p>
+      <section className="space-y-5">
+        <div className="space-y-0 [&_p]:mb-0 [&_h2]:mt-0">
+          <p className="text-sm font-medium text-muted-foreground">Total balance</p>
+          <h2 className="text-3xl font-bold tracking-tight">1.00 US</h2>
+        </div>
         <div className="flex flex-wrap gap-2">
-          <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
-            Send
+          <Button size="sm" variant="default">
+            Send Money
           </Button>
-          <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
+          <Button size="sm" variant="secondary">
             Add money
           </Button>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button size="sm" variant="outline" className="gap-1">
-                Request
-                <ChevronDown className="size-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start">
-              <DropdownMenuItem>Request from bank account</DropdownMenuItem>
-              <DropdownMenuItem>Request from card</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <Button size="sm" variant="secondary">
+            Request
+          </Button>
         </div>
       </section>
 
-      {/* Currency account cards */}
-      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {CURRENCY_ACCOUNTS.map((account) => (
-          <Card key={account.code} className="bg-muted/50">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <span className="text-lg" aria-hidden>{account.flag}</span>
+      {/* Currency account cards — horizontal scroll to reach last card */}
+      <section className="cards-scroll min-w-0 overflow-x-auto overflow-y-visible pb-2">
+        <div className="flex w-max min-w-full gap-[12px] flex-nowrap">
+        {CURRENCY_ACCOUNTS.slice(0, 2).map((account) => (
+          <Card key={account.code} className="flex h-[206px] min-w-[256px] shrink-0 flex-col justify-between gap-0 bg-muted/50">
+            <CardHeader className="flex flex-row items-center gap-2 space-y-0 pb-2">
+              <Image
+                src={account.flagSrc}
+                alt={`${account.label} flag`}
+                width={CARD_FLAG_SIZE.width}
+                height={CARD_FLAG_SIZE.height}
+                className="size-12 shrink-0 rounded-full object-cover"
+              />
               <CardTitle className="text-base font-medium">{account.label}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-1">
@@ -81,24 +71,62 @@ export default function Home() {
             </CardContent>
           </Card>
         ))}
+        <div className="group/add-card relative flex h-[206px] min-w-[256px] shrink-0 rounded-[14px]" data-add-card>
+        <svg
+          className="pointer-events-none absolute inset-0 h-full w-full text-grey-300 group-hover/add-card:text-grey-400"
+          viewBox="0 0 256 206"
+          preserveAspectRatio="none"
+          aria-hidden
+        >
+          <rect
+            x="0.5"
+            y="0.5"
+            width="255"
+            height="205"
+            rx="13.5"
+            ry="13.5"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1"
+            strokeDasharray="4 4"
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
+        <button
+          type="button"
+          className="flex flex-1 flex-col justify-between rounded-[13px] bg-transparent p-4 text-left transition-colors hover:bg-grey-300 dark:hover:bg-grey-300"
+          aria-label="Add another currency to your account"
+        >
+          <div className="flex size-12 shrink-0 items-center justify-center rounded-full border border-grey-300 bg-grey-200">
+            <Plus className="size-6 text-grey-700" strokeWidth={2} />
+          </div>
+          <p className="text-sm text-grey-400">
+            Add another currency to your account.
+          </p>
+        </button>
+        </div>
+        </div>
       </section>
 
+      {/* Transfer calculator Section */}
+      <TransferCalculatorSection />
+
       {/* Recent transactions */}
-      <section className="space-y-4">
+      <section className="mt-8 space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">Transactions</h2>
           <Link
             href="/"
-            className="text-sm font-medium text-primary underline-offset-4 hover:underline"
+            className="text-sm font-medium text-brand-green-700 underline-offset-4 hover:underline"
           >
             See all
           </Link>
         </div>
-        <ul className="divide-y divide-border rounded-lg border bg-card">
+        <ul className="rounded-lg bg-transparent">
           {RECENT_TRANSACTIONS.map((tx) => (
             <li key={tx.id} className="flex items-center gap-4 px-4 py-3">
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-muted">
-                <tx.icon className="size-5 text-muted-foreground" />
+              <div className="flex size-12 shrink-0 items-center justify-center rounded-full border border-border bg-muted">
+                <tx.icon className="size-6 text-grey-700" strokeWidth={1.5} fill="none" />
               </div>
               <div className="min-w-0 flex-1">
                 <p className="font-medium">{tx.name}</p>
@@ -107,7 +135,7 @@ export default function Home() {
                   <p className="text-xs text-muted-foreground">{tx.subAmount}</p>
                 )}
               </div>
-              <p className={`shrink-0 text-right font-medium ${tx.isCredit ? "text-primary" : ""}`}>
+              <p className={`shrink-0 text-right font-medium ${tx.isCredit ? "text-brand-green-700" : ""}`}>
                 {tx.amount}
               </p>
             </li>
